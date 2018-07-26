@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>Radio.qml</file>
+        <file>api/Binding.qml</file>
+    </qresource>
+</RCC>

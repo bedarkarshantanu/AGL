@@ -1,0 +1,75 @@
+<html>
+    <head>
+        <title>Radio Test</title>
+        <link rel="stylesheet" href="RadioBinding.css">
+        <script type="text/javascript" src="jquery-3.3.1.min.js"></script>
+        <script type="text/javascript" src="AFB-websock.js"></script>
+        <script type="text/javascript" src="RadioBinding.js"></script>
+    </head>
+
+    <body onload="init()">
+
+        <h1>Radio Test</h1>
+        <button id="connected" onclick="init()">Binder WS Fail</button> 
+        <button id="monitoring" onclick="window.open('/monitoring/monitor.html', '_monitor_ctl')">Debug/Monitoring</a></button>
+    <br><br>
+
+    <h2>V3 API CALL</h2>
+    <ol>
+        <li><button onclick="callbinder('radio', 'frequency', {} );">Frequency</button></li>
+        <br>
+
+        <li><button onclick="callbinder('radio', 'rds', { } );">RDS</button></li>
+        <br>
+
+        <form id='band'>
+        	<input type="radio" name="band" value="FM" checked>FM</input>
+         	<input type="radio" name="band" value="AM">AM</input>
+         	<input type="radio" name="band" value="DAB">DAB</input>
+        </form>
+	
+	<li>
+        <button onclick="checkband();">Check if band is supported</button>
+        <button onclick="setband();">Set band</button>
+	<button onclick="get_frequency_range();">Get frequency range</button>
+	<button onclick="get_frequency_step();">Get frequency step</button>
+	</li>
+        <br>
+
+	<li>
+	<button onclick="callbinder('radio', 'start', { } );">Start</button>
+	<button onclick="callbinder('radio', 'stop', { } );">Stop</button>
+	</li>
+        <br>
+
+
+	<li>
+	<button onclick="get_stereo_mode();">Get Stereo mode</button>
+	<button onclick="set_stereo_mode();">Set Stereo mode</button>
+	     <form id='mode'>
+        	<input type="radio" name="mode" value="stereo" checked>Stereo</input>
+         	<input type="radio" name="mode" value="mono">Mono</input>
+        </form>
+        </li>
+        <br>
+
+        <li>
+        <button onclick="callbinder('radio', 'scan_start', { direction:'backward' } );">Scan Backward</button>
+        <button onclick="callbinder('radio', 'scan_start', { direction:'forward' } );">Scan Forward</button>
+        </li>
+        <br>
+
+    </ol>
+
+    <div id="main" style="visibility:hidden">
+        <ol>
+            <li>Question <pre id="question"></pre>
+            <li>Response <pre id="output"></pre>
+            <li>Events: <pre id="outevt"></pre>
+        </ol>
+    </div>
+
+    <script> 
+    </script>
+    
+    

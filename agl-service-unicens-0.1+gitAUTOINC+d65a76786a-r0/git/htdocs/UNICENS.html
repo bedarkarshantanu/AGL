@@ -1,0 +1,170 @@
+<html>
+<head>
+    <title>Unicens Simple Test</title>
+
+    <link rel="stylesheet" href="Ucs2Binding.css">
+    <script type="text/javascript" src="AFB-websock.js"></script>
+    <script type="text/javascript" src="Ucs2Binding.js"></script>
+    <style>
+		.divTable{
+			display: table;
+
+		}
+		.divTableRow {
+			display: table-row;
+		}
+		.divTableHeading {
+			background-color: #EEE;
+			display: table-header-group;
+		}
+		.divTableCell, .divTableHead {
+			border: 1px solid #999999;
+			display: table-cell;
+			padding: 3px 10px;
+		}
+		.divTableHeading {
+			background-color: #EEE;
+			display: table-header-group;
+			font-weight: bold;
+		}
+		.divTableFoot {
+			background-color: #EEE;
+			display: table-footer-group;
+			font-weight: bold;
+		}
+		.divTableBody {
+			display: table-row-group;
+		}
+
+		.ucsCtrlButton {
+			border: none;
+			padding: 5px 15px;
+			text-align: center;
+			text-decoration: none;
+			display: inline-block;
+			font-size: 16px;
+			width: 144px;
+			border: 2px solid #4CAF50;
+		}
+	</style>
+</head>
+<body onload="init('ucs2_config','unicens', 'listconfig');">
+    <h1>Unicens Simple Test</h1>
+
+    <button id="connected" onclick="init('ucs2_config','unicens', 'listconfig')">Binder WS Fail</button>
+    <br><br>
+    <b>Selected HAL </b>
+    <select id='ucs2_config'></select>
+    <br>
+
+    <ol>
+    <li><button onclick="callbinder('UNICENS','subscribe', {})">Subscribe to network events</button></li>
+    <li><button onclick="callbinder('UNICENS','subscriberx', {})">Subscribe to Rx message events</button></li>
+    <li><button onclick="callbinder('UNICENS','initialise', {filename:ucs2_config})">Parse XML and Start UNICENS</button></li>
+    </ol>
+    <br>
+
+    <h1>K2L Slim-Amp Demo</h1>
+    <ol>
+    <li><button onclick="callbinder('UNICENS','writei2c', {node: 0x270, data:[0x07,0x03,0xFF]})">WriteI2c to 0x270 (mute)</button></li>
+    <li><button onclick="callbinder('UNICENS','writei2c', {node: 0x271, data:[0x07,0x03,0xFF]})">WriteI2c to 0x271 (mute)</button></li>
+    <li><button onclick="callbinder('UNICENS','writei2c', {node: 0x272, data:[0x07,0x03,0xFF]})">WriteI2c to 0x272 (mute)</button></li>
+    </ol>
+    <ol>
+    <li><button onclick="callbinder('UNICENS','sendmessage', {node: 0x270, msgid: 0x5AC4, data:'ESIzRA=='})">Send ControlMsgB64 to 0x270</button></li>
+    <li><button onclick="callbinder('UNICENS','sendmessage', {node: 0x270, msgid: 0x5AC4})">Send ControlMsgB64 to 0x270 (no data)</button></li>
+    <!--<li><button onclick="callbinder('UNICENS','sendmessage', {node: 0x270, msgid: 0x5AC4, data: null})">Send ControlMsgB64 to 0x270 (data: null)</button></li>-->
+    <!--<li><button onclick="callbinder('UNICENS','sendmessage', {node: 0x270, msgid: 0x5AC4, data: ''})">Send ControlMsgB64 to 0x270 (data: '')</button></li>-->
+    </ol>
+    <br>
+
+    <h1>Fiberdyne Amplifier Controls (Node 0x510)</h1>
+    <div class="divTable">
+    <div class="divTableBody">
+    <div class="divTableRow">
+    <div class="divTableCell">&nbsp;</div>
+    <div class="divTableCell">Volume (0x100)</div>
+    <div class="divTableCell">Bass (0x101)</div>
+    <div class="divTableCell">Treble (0x102)</div>
+    <div class="divTableCell">Mid (0x103)</div>
+    <div class="divTableCell">Balance (0x0104)</div>
+    <div class="divTableCell">Fade (0x105)</div>
+    <!--<div class="divTableCell">SmartEqPoints (0x108)</div>-->
+    <div class="divTableCell">Mute (0x109)</div>
+    <!--div class="divTableCell">&nbsp;</div>
+    <div class="divTableCell">&nbsp;</div-->
+    </div>
+    <div class="divTableRow">
+    <div class="divTableCell">Max</div>
+    <div class="divTableCell"><button class="ucsCtrlButton" onclick="callbinder('UNICENS','sendmessage', {node: 0x510, msgid: 0x100, data:'AP8='})">MaxVolume</button></div><!--[0x00,0xFF]-->
+    <div class="divTableCell"><button class="ucsCtrlButton" onclick="callbinder('UNICENS','sendmessage', {node: 0x510, msgid: 0x101, data:'AA8='})">MaxBass</button></div><!--[0x00,15]-->
+    <div class="divTableCell"><button class="ucsCtrlButton" onclick="callbinder('UNICENS','sendmessage', {node: 0x510, msgid: 0x102, data:'AA8='})">MaxTreble</button></div><!--[0x00,15]-->
+    <div class="divTableCell"><button class="ucsCtrlButton" onclick="callbinder('UNICENS','sendmessage', {node: 0x510, msgid: 0x103, data:'AA8='})">MaxMid</button></div><!--[0x00,15]-->
+    <div class="divTableCell"><button class="ucsCtrlButton" onclick="callbinder('UNICENS','sendmessage', {node: 0x510, msgid: 0x104, data:'AI8='})">Full Left</button></div><!--[0x00,-15]-->
+    <div class="divTableCell"><button class="ucsCtrlButton" onclick="callbinder('UNICENS','sendmessage', {node: 0x510, msgid: 0x105, data:'AA8='})">Full Forward</button></div><!--[0x00,15]-->
+    <!--<div class="divTableCell">
+         <ol>
+              <li><button onclick="pushCurve(0xFF,1)">Test HIGH Curve</button></li>
+              <li><button onclick="pushCurve(0xFF,2)">Test HIGH Curve</button></li>
+              <li><button onclick="pushCurve(0xFF,3)">Test HIGH Curve</button></li>
+              <li><button onclick="pushCurve(0xFF,4)">Test HIGH Curve</button></li>
+         </ol>
+    </div>-->
+    <div class="divTableCell"><button class="ucsCtrlButton" onclick="callbinder('UNICENS','sendmessage', {node: 0x510, msgid: 0x109, data:'AAE='})">Mute</button></div><!--data:[0x00,1]-->
+    <!--div class="divTableCell">&nbsp;</div>
+    <div class="divTableCell">&nbsp;</div-->
+    </div>
+
+    <div class="divTableRow">
+    <div class="divTableCell">Middle</div>
+    <div class="divTableCell"><button class="ucsCtrlButton" onclick="callbinder('UNICENS','sendmessage', {node: 0x510, msgid: 0x100, data:'AO8='})">MidVolume</button></div><!--[0x00,0xEF]-->
+    <div class="divTableCell"><button class="ucsCtrlButton" onclick="callbinder('UNICENS','sendmessage', {node: 0x510, msgid: 0x101, data:'AAA='})">MidBass</button></div><!--[0x00,0]-->
+    <div class="divTableCell"><button class="ucsCtrlButton" onclick="callbinder('UNICENS','sendmessage', {node: 0x510, msgid: 0x102, data:'AAA='})">MidTreble</button></div><!--[0x00,0]-->
+    <div class="divTableCell"><button class="ucsCtrlButton" onclick="callbinder('UNICENS','sendmessage', {node: 0x510, msgid: 0x103, data:'AAA='})">MidMid</button></div><!--[0x00,0]-->
+    <div class="divTableCell"><button class="ucsCtrlButton" onclick="callbinder('UNICENS','sendmessage', {node: 0x510, msgid: 0x104, data:'AAA='})">Center Balance</button></div><!--[0x00,0]-->
+    <div class="divTableCell"><button class="ucsCtrlButton" onclick="callbinder('UNICENS','sendmessage', {node: 0x510, msgid: 0x105, data:'AAA='})">Center Fade</button></div><!--[0x00,0]-->
+    <!--<div class="divTableCell">
+         <ol>
+         <li><button onclick="pushCurve(0xE7,1)">Test MID Curve</button></li>
+         <li><button onclick="pushCurve(0xE7,2)">Test MID Curve</button></li>
+         <li><button onclick="pushCurve(0xE7,3)">Test MID Curve</button></li>
+         <li><button onclick="pushCurve(0xE7,4)">Test MID Curve</button></li>
+         </ol>
+       </div>-->
+    <div class="divTableCell"><button class="ucsCtrlButton" onclick="callbinder('UNICENS','sendmessage', {node: 0x510, msgid: 0x109, data:'AAA='})">Unmute</button></div><!--[0x00,0]-->
+    <!--div class="divTableCell">&nbsp;</div>
+    <div class="divTableCell">&nbsp;</div-->
+    </div>
+    <div class="divTableRow">
+    <div class="divTableCell">Min</div>
+    <div class="divTableCell"><button class="ucsCtrlButton" onclick="callbinder('UNICENS','sendmessage', {node: 0x510, msgid: 0x100, data:'AAA='})">MinVolume</button></div><!--[0x00,0x00]-->
+    <div class="divTableCell"><button class="ucsCtrlButton" onclick="callbinder('UNICENS','sendmessage', {node: 0x510, msgid: 0x101, data:'AI8='})">MinBass</button></div><!--[0x00,-15]-->
+    <div class="divTableCell"><button class="ucsCtrlButton" onclick="callbinder('UNICENS','sendmessage', {node: 0x510, msgid: 0x102, data:'AI8='})">MinTreble</button></div><!--[0x00,-15]-->
+    <div class="divTableCell"><button class="ucsCtrlButton" onclick="callbinder('UNICENS','sendmessage', {node: 0x510, msgid: 0x103, data:'AI8='})">MinMidRange</button></div><!--[0x00,-15]-->
+    <div class="divTableCell"><button class="ucsCtrlButton" onclick="callbinder('UNICENS','sendmessage', {node: 0x510, msgid: 0x104, data:'AA8='})">Full Right</button></div><!--[0x00,15]-->
+    <div class="divTableCell"><button class="ucsCtrlButton" onclick="callbinder('UNICENS','sendmessage', {node: 0x510, msgid: 0x105, data:'AI8='})">Full Rear</button></div><!--[0x00,-15]-->
+    <!--<div class="divTableCell">
+        <ol>
+          <li><button onclick="pushCurve(0,1)">Test LOW Curve</button></li>
+          <li><button onclick="pushCurve(0,2)">Test LOW Curve</button></li>
+          <li><button onclick="pushCurve(0,3)">Test LOW Curve</button></li>
+          <li><button onclick="pushCurve(0,4)">Test LOW Curve</button></li>
+        </ol>
+    </div>-->
+    <div class="divTableCell">&nbsp;</div>
+    <!--div class="divTableCell">&nbsp;</div>
+    <div class="divTableCell">&nbsp;</div-->
+    </div>
+    </div>
+    </div>
+
+    <h1>Events</h1>
+    <br>
+    <div id="main" style="visibility:hidden">
+    <ol>
+    <li>Question <pre id="question"></pre>
+    <li>Response <pre id="output"></pre>
+    <li>Events: <pre id="outevt"></pre>
+    </ol>
+    </div>
+</body>

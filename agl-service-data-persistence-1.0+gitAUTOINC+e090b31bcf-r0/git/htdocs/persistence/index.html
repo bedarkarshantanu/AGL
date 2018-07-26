@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+	<head>
+		<title>agl-service-data-persistence</title>
+		<meta charset="UTF-8">
+		<script type="text/javascript" src="AFB-websock.js"></script>
+		<script type="text/javascript" src="persistence-binding.js"></script>
+		<link rel="stylesheet" type="text/css" href="binding-debug.css" />
+	</head>
+	<body onload="init();" id="app-body">
+		<div id="debug-panel-container"></div>
+		<h1>agl-service-identity</h1>
+		<h2>Raw data access</h2>
+		<p>
+			<ul>
+				<li><input type="text" name="read-key" id="read-key" /> <button onclick="readData();">Read Data</button> <button onclick="deleteData();">Delete Data</button></li>
+				<li>
+					<p><label>Key:&nbsp;</label><input type="text" name="write-key" id="write-key"/></p>
+					<p><label>Data:</label></p>
+					<p><textarea id="write-data"></textarea></p>
+					<p><button onclick="writeData();">Write Data</button></p>
+				</li>
+			</ul>
+		</p>
+		<h2>User Profile (VIN: <input type="text" name="profile-vin" id="profile-vin" value="WVGGF7BP7HD005986" />)</h2>
+		<ul>
+			<li><input type="text" name="get-profile-key" id="get-profile-key" /> <button onclick="readProfile();">Get Profile</button> <button onclick="deleteProfile();">Delete Profile</button></li>
+			<li>
+				<h3>Update user profile</h3>
+				<ul>
+					<li><p><label>Key Token:</label> <input type="text" name="set-profile-key" id="set-profile-key"/></p></li>
+					<li><p><label>Login:</label> <input type="text" name="set-profile-login" id="set-profile-login"/></p></li>
+					<li><p><label>First Name:</label> <input type="text" name="set-profile-first-name" id="set-profile-first-name"/></p></li>
+					<li><p><label>Last Name:</label> <input type="text" name="set-profile-last-name" id="set-profile-last-name"/></p></li>
+					<li><p><label>Language:</label> <input type="text" name="set-profile-language" id="set-profile-language"/></p></li>
+					<button onclick="writeProfile();">Save</button>
+				</ul>
+			</li>
+		</ul>
+	</body>
+</html>

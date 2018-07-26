@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+	<head>
+		<title>agl-service-identity</title>
+		<meta charset="UTF-8">
+		<script type="text/javascript" src="AFB-websock.js"></script>
+		<script type="text/javascript" src="identity-binding.js"></script>
+		<link rel="stylesheet" type="text/css" href="binding-debug.css" />
+		<script>
+
+		</script>
+	</head>
+	<body onload="init();" id="app-body">
+		<div id="debug-panel-container"></div>
+		<h1>agl-service-identity</h1>
+		<p>
+			<ul>
+				<li><button onclick="subscribe();">Subscribe</button></li>
+				<li>
+					<select name="fake-auth-kind" id="fake-auth-kind">
+						<option value="nfc" selected="selected">nfc</option>
+					</select>
+					<select name="fake-auth-key" id="fake-auth-key" onchange="updateNfcUi();">
+						<option value="custom" selected="selected">custom</option>
+						<option value="b411f7fb">b411f7fb</option>
+						<option value="d77d901d">d77d901d</option>
+						<option value="c7350500">c7350500</option>
+						<option value="448b6df6">448b6df6</option>
+						<option value="a46f19fc">a46f19fc</option>
+						<option value="34ea1afc">34ea1afc</option>
+						<option value="473b4200">473b4200</option>
+					</select>
+					<input type="text" name="fake-auth-key-custom" id="fake-auth-key-custom" />
+					<button onclick="fakeAuth();">fake auth</button>
+				</li>
+				<li><button onclick="getIdentity();">Get identity</button></li>
+				<li><button onclick="logout();">Log out</button></li>
+			</ul>
+		</p>
+	</body>
+</html>
